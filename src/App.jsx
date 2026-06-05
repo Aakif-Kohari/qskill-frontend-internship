@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Translator from './pages/Translator'
+import StringGenerator from './pages/StringGenerator'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/translator" element={<Translator />} />
+          <Route path="/string-generator" element={<StringGenerator />} />
         </Routes>
       </main>
     </div>

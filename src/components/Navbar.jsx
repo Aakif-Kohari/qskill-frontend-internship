@@ -7,6 +7,7 @@ function Navbar() {
       <div className="flex gap-4">
         <Link to="/" className="hover:text-blue-500">Home</Link>
         <Link to="/translator" className="hover:text-blue-500">Translator</Link>
+        <Link to="/string-generator" className="hover:text-blue-500">String Generator</Link>
       </div>
     </nav>
   )
