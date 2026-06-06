@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 function StringGenerator() {
   // basic state for the UI
@@ -11,9 +11,12 @@ function StringGenerator() {
     symbols: false
   })
   const [copied, setCopied] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   // generate function using useCallback so it doesn't recreate every render
   const handleGenerate = useCallback(() => {
+    setErrorMsg('')
+    
     let charset = ''
     if (charTypes.uppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     if (charTypes.lowercase) charset += 'abcdefghijklmnopqrstuvwxyz'
@@ -21,7 +24,7 @@ function StringGenerator() {
     if (charTypes.symbols) charset += '!@#$%^&*'
 
     if (charset === '') {
-      alert('Please select at least one character type!')
+      setErrorMsg('Please select at least one character type!')
       setGeneratedString('')
       return
     }
@@ -34,6 +37,10 @@ function StringGenerator() {
     
     setGeneratedString(result)
   }, [strLength, charTypes])
+
+  useEffect(() => {
+    handleGenerate()
+  }, [])
 
   const handleCopy = () => {
     if (!generatedString) return
@@ -59,6 +66,13 @@ function StringGenerator() {
       </div>
 
       <div className="space-y-6">
+        {/* Error message */}
+        {errorMsg && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm text-center">
+            {errorMsg}
+          </div>
+        )}
+
         {/* Output Box */}
         <div className="relative">
           <div className="w-full p-4 min-h-[60px] bg-slate-50 border border-slate-200 rounded-lg text-slate-800 text-lg break-all flex items-center">
