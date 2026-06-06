@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
 function StringGenerator() {
   // basic state for the UI
@@ -12,14 +12,32 @@ function StringGenerator() {
   })
   const [copied, setCopied] = useState(false)
 
-  // just a placeholder for now
-  const handleGenerate = () => {
-    console.log("Generate clicked! Logic coming soon.")
-    setGeneratedString("PlaceholderString123!")
-  }
+  // generate function using useCallback so it doesn't recreate every render
+  const handleGenerate = useCallback(() => {
+    let charset = ''
+    if (charTypes.uppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    if (charTypes.lowercase) charset += 'abcdefghijklmnopqrstuvwxyz'
+    if (charTypes.numbers) charset += '0123456789'
+    if (charTypes.symbols) charset += '!@#$%^&*'
+
+    if (charset === '') {
+      alert('Please select at least one character type!')
+      setGeneratedString('')
+      return
+    }
+
+    let result = ''
+    for (let i = 0; i < strLength; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length)
+      result += charset[randomIndex]
+    }
+    
+    setGeneratedString(result)
+  }, [strLength, charTypes])
 
   const handleCopy = () => {
-    console.log("Copy clicked! Logic coming soon.")
+    if (!generatedString) return
+    navigator.clipboard.writeText(generatedString)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
