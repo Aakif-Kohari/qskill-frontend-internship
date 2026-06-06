@@ -40,7 +40,7 @@ function StringGenerator() {
 
   useEffect(() => {
     handleGenerate()
-  }, [])
+  }, [handleGenerate])
 
   const handleCopy = () => {
     if (!generatedString) return
@@ -147,7 +147,7 @@ function StringGenerator() {
           onClick={handleGenerate}
           className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-sm transition-colors"
         >
-          Generate String
+          Re-Generate String
         </button>
       </div>
     </div>
